@@ -167,7 +167,7 @@ def post_template(title, content, date, description="", keywords="", author="", 
 </body>
 </html>"""
 
-def index_template(posts, config):
+def index_template(posts, config, categories=None):
     """Generate HTML for the index page"""
     theme = config.get('theme', 'light')
     post_list = ""
@@ -184,6 +184,17 @@ def index_template(posts, config):
             {f"<p>{post['description']}</p>" if post.get('description') else ""}
         </article>"""
     
+    # Build category navigation
+    category_nav = ""
+    if categories:
+        category_links = []
+        for category in categories:
+            category_url = f"categories/{category.lower().replace(' ', '-')}.html"
+            category_links.append(f'<a href="{category_url}">{category}</a>')
+        category_nav = ''.join(category_links)
+        if category_nav:
+            category_nav += '<span class="nav-separator">|</span>'
+    
     return f"""<!DOCTYPE html>
 <html lang="en" data-theme="{theme}">
 <head>
@@ -198,6 +209,7 @@ def index_template(posts, config):
     <header>
         <h1>{config['site_title']}</h1>
         <nav>
+            {category_nav}
             <a href="rss.xml">RSS</a>
         </nav>
     </header>

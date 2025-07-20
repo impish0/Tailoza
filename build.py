@@ -121,7 +121,7 @@ def build_site():
     posts.sort(key=lambda x: x['date'], reverse=True)
     
     # Generate index page
-    index_html = index_template(posts, config)
+    index_html = index_template(posts, config, sorted(categories.keys()))
     with open('output/index.html', 'w', encoding='utf-8') as f:
         f.write(index_html)
     

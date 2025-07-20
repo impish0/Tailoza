@@ -119,6 +119,13 @@ header nav a:hover {
     color: var(--accent-foreground);
 }
 
+.nav-separator {
+    margin: 0 0.5rem;
+    color: var(--border-color);
+    font-weight: 300;
+    opacity: 0.5;
+}
+
 article h1 {
     font-size: 2em;
     font-weight: 600;
