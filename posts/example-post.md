@@ -50,12 +50,28 @@ Inline code: `python3 build.py`
 
 Fenced code blocks with syntax highlighting:
 
-```python
-def greet(name):
-    """A simple greeting function"""
-    return f"Hello, {name}! Welcome to Tailoza!"
+```typescript
+/**
+ * Calculates the reading time for a blog post
+ * @param text - The blog post content
+ * @param wordsPerMinute - Average reading speed (default: 200)
+ * @returns Estimated reading time in minutes
+ */
+function calculateReadingTime(text: string, wordsPerMinute: number = 200): number {
+  // Remove extra whitespace and split into words
+  const words = text.trim().split(/\s+/);
+  const wordCount = words.length;
+  
+  // Calculate reading time and round up
+  const readingTime = Math.ceil(wordCount / wordsPerMinute);
+  
+  return readingTime;
+}
 
-print(greet("World"))
+// Example usage
+const blogPost = "This is a sample blog post with some content...";
+const minutes = calculateReadingTime(blogPost);
+console.log(`Estimated reading time: ${minutes} minute${minutes > 1 ? 's' : ''}`);
 ```
 
 ### Blockquotes

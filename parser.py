@@ -48,7 +48,8 @@ def markdown_to_html(text):
         content = match.group(1).strip()
         # Check if first line is a language hint
         lines = content.split('\n', 1)
-        if lines and lines[0] and not ' ' in lines[0] and lines[0].isalpha():
+        if lines and lines[0] and ' ' not in lines[0] and lines[0].replace('-', '').replace('_', '').isalnum():
+            # Language identifiers can contain hyphens and underscores
             lang = lines[0].lower()
             code = html.escape(lines[1] if len(lines) > 1 else '')
             code_blocks.append((lang, code))
@@ -254,6 +255,18 @@ def markdown_to_html(text):
     text = re.sub(r'^---+$', '<hr>', text, flags=re.MULTILINE)
     text = re.sub(r'^\*\*\*+$', '<hr>', text, flags=re.MULTILINE)
     
+    # Paragraphs (before restoring code blocks)
+    paragraphs = text.split('\n\n')
+    formatted_paragraphs = []
+    for p in paragraphs:
+        p = p.strip()
+        if p and not re.match(r'^<(?:h[1-6]|ul|ol|li|blockquote|pre|table|hr)', p) and not re.match(r'^___CODEBLOCK_\d+___$', p):
+            # Don't wrap if it's already an HTML element or a code block placeholder
+            p = f'<p>{p}</p>'
+        formatted_paragraphs.append(p)
+    
+    text = '\n\n'.join(formatted_paragraphs)
+    
     # Restore code blocks and inline codes
     for i, (lang, code) in enumerate(code_blocks):
         if lang:
@@ -264,17 +277,7 @@ def markdown_to_html(text):
     for i, code in enumerate(inline_codes):
         text = text.replace(f'___INLINECODE_{i}___', f'<code>{code}</code>')
     
-    # Paragraphs
-    paragraphs = text.split('\n\n')
-    formatted_paragraphs = []
-    for p in paragraphs:
-        p = p.strip()
-        if p and not re.match(r'^<(?:h[1-6]|ul|ol|li|blockquote|pre|table|hr)', p):
-            # Don't wrap if it's already an HTML element
-            p = f'<p>{p}</p>'
-        formatted_paragraphs.append(p)
-    
-    return '\n\n'.join(formatted_paragraphs)
+    return text
 
 def extract_headings(html_content):
     """Extract headings from HTML content for TOC generation"""

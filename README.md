@@ -10,6 +10,7 @@ Of course, you could pay a subscription to a hosting provider, but I don't want 
   <img src="tailoza-blog-home.png" alt="Tailoza Blog Home" width="100%">
 </p>
 
+
 ## Here's the Deal
 
 I built Tailoza because I wanted to write, not wrestle with config files.
@@ -24,6 +25,7 @@ I built Tailoza because I wanted to write, not wrestle with config files.
 - Deploy anywhere
 
 That's it. No React. No databases. No subscriptions!
+
 
 ## The 2-Minute Setup (I'm Not Kidding)
 
@@ -64,7 +66,9 @@ Upload that folder literally anywhere that serves HTML. GitHub Pages, Netlify, y
 
 (if you don't know how to do that, i'll make some tutorials soon)
 
+
 ## What You're Getting
+
 
 <p align="center">
   <img src="tailoza-blog-page.png" alt="Tailoza Blog Features" width="100%">
@@ -87,7 +91,9 @@ Upload that folder literally anywhere that serves HTML. GitHub Pages, Netlify, y
 
 ## How to Use This Thing
 
+
 ### Writing Posts
+
 
 Drop your markdown files in `posts/`:
 
@@ -112,6 +118,7 @@ Your content here. Write like a human.
 
 ### Make It Yours
 
+
 Edit `config.json`:
 
 ```json
@@ -132,7 +139,9 @@ Edit `config.json`:
 
 ```
 
+
 ### Categories (They Just Work)
+
 
 Add categories to any post:
 
@@ -146,9 +155,11 @@ Boom. Automatic category pages at `/categories/marketing.html`.
 
 ### Table of Contents
 
+
 Got a long post? Add `toc: true` to the frontmatter. It'll generate a nice floating TOC from your headings. Your readers will thank you.
 
 ## The Philosophy (Why I Built This)
+
 
 I've built million-dollar businesses. I've also wasted countless hours on "modern" blogging platforms (all of them)
 
@@ -164,16 +175,21 @@ This tool does one thing: **turns markdown into a beautiful blog**.
 
 No more. No less.
 
+
 ## Deploy This Thing
 
+
 ### GitHub Pages
+
 
 1. Build: `python3 build.py`
 2. Push the `output/` folder
 3. Turn on Pages in settings
 4. You're live
 
+
 ### Anywhere Else
+
 
 1. Build: `python3 build.py`
 2. Upload the `output/` folder
@@ -181,7 +197,9 @@ No more. No less.
 
 I'm not kidding. It's just HTML files.
 
+
 ## Want to Contribute?
+
 
 Cool. I built this in a weekend, so there's probably room for improvement.
 
@@ -191,7 +209,9 @@ Cool. I built this in a weekend, so there's probably room for improvement.
 
 Just keep it simple. That's the whole point.
 
+
 ## One More Thing
+
 
 Stop overthinking your blog setup.
 
@@ -205,6 +225,6 @@ Now stop reading this README and go write something.
 
 Built with 🔥 by [Dustin Hogate](https://dustinhogate.com)
 
-P.S. - If this saves you time, use that time to hug your kids, walk your dog, or kiss your SO.
+***P.S. -*** If this saves you time, use that time to hug your kids, walk your dog, or kiss your SO.
 
-P.P.S. - If you are mad about yet another blog repo - consider this: I built it for me, not you. But you are free to use it, copy it or ignore it.
+***P.P.S. -*** If you are mad about yet another blog repo - consider this: I built it for me, not you. But you are free to use it, copy it or ignore it.
