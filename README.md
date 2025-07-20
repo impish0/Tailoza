@@ -1,212 +1,230 @@
-# 🎨 Tailoza
+# Tailoza
 
-A beautifully simple static blog generator that makes publishing uncomplicated. Built over a weekend to prove that blogging doesn't need to be complex.
+I spent a weekend building this because I was tired of the BS. I have done my playing elsewhere...
 
-<p align="center">
-  <strong>Write in Markdown → Build → Deploy → Done</strong>
-</p>
+And the cognitive load it takes just to lob my un-filtered thoughts onto the internet with every other platform makes writing things suck. Every blogging platform wants you to install 47 dependencies, configure a database, and sacrifice a goat to the SEO gods just to publish a simple post.
 
-## ✨ Why Tailoza?
+Or, it's a static site generator with unimaginable config files and massive showcase of broken, un-documented, out-of-date themes.
 
-I'm Dustin Hogate, and I built Tailoza because I wanted a blog that was:
-- **Dead simple** to use - no databases, no complex configs
-- **Beautiful** out of the box - with a modern shadcn-inspired theme
-- **Lightning fast** - pure static HTML with zero JavaScript bloat
-- **SEO ready** - because your content deserves to be found
+or its a subscription...
 
-This is a passion project born from frustration with overly complex blogging platforms. Sometimes you just want to write and publish without the hassle.
+That's insane.
 
-## 🚀 Quick Start
+## Here's the Deal
+
+I built Tailoza because I wanted to write, not wrestle with config files.
+
+You know what I wanted?
+
+- Write in Markdown
+
+- Run one command
+
+- Get a beautiful site
+
+- Deploy anywhere
+
+
+That's it. No React. No databases. No build pipelines that require a PhD, Caffeine, or more  to understand.
+
+## The 2-Minute Setup (I'm Not Kidding)
 
 ```bash
-# Clone the repository
+
 git clone https://github.com/impish0/Tailoza.git
+
 cd Tailoza
 
-# Create your first post
-echo "---
-title: Hello World
-date: 2025-01-20
----
-
-Welcome to my blog!" > posts/hello-world.md
-
-# Build your site
-python3 build.py
-
-# Preview locally
-cd output && python3 -m http.server 8000
 ```
 
-That's it! Your blog is ready at `http://localhost:8000`
+Now write your first post:
 
-## 📝 Features
+```bash
 
-### For Writers
-- **Markdown**: Write naturally with full CommonMark support
-- **Frontmatter**: Simple YAML metadata for posts
-- **Categories**: Organize your content effortlessly
-- **Table of Contents**: Auto-generated from your headings
-- **Code Highlighting**: Beautiful syntax highlighting with Prism.js
-- **Draft Mode**: Prefix files with `_` to keep them private
+echo "---
 
-### For Developers
-- **Zero Dependencies**: Just Python 3.6+ standard library
-- **shadcn Theme**: Modern violet theme with light/dark modes
-- **100% Static**: No JavaScript required (except optional features)
-- **SEO Optimized**: Meta tags, Open Graph, sitemap, RSS feed
-- **Responsive**: Mobile-first design that works everywhere
-- **Fast Builds**: Handles hundreds of posts efficiently
+title: My First Post
 
-### For Readers
-- **Lightning Fast**: No database queries, no render delays
-- **Accessible**: Semantic HTML, proper contrast, keyboard navigation
-- **RSS Support**: Follow your favorite blogs the classic way
-- **Clean Design**: Focus on content, not chrome
+date: 2025-01-20
 
-## 🎯 Usage
+---
+
+
+Hello world. I'm blogging!" > posts/my-first-post.md
+
+```
+
+Build it:
+
+```bash
+
+python3 build.py
+
+```
+
+Done. Your blog is in the `output/` folder.
+
+Upload that folder literally anywhere that serves HTML. GitHub Pages, Netlify, your old shared hosting from 2003 - doesn't matter.
+
+(if you dont know how to do that, i'll make some tutorials soon)
+
+## What You're Getting
+
+**The Good Stuff:**
+
+- Beautiful shadcn-inspired design (light AND dark mode)
+
+- Categories that actually work
+
+- Auto-generated table of contents
+
+- SEO that Google likes
+
+- RSS feed for the old-school readers
+
+- Syntax highlighting for your code and markdown
+
+- Zero JavaScript bloat
+
+
+**The Technical Stuff** (for those who care):
+
+- 100% static HTML output (almost)
+
+- Python 3.6+ (only needed for building)
+
+- Processes hundreds of posts in seconds
+
+- Mobile-first responsive design
+
+- Full markdown post support
+
+## How to Use This Thing
 
 ### Writing Posts
 
-Create markdown files in the `posts/` directory:
+Drop markdown files in `posts/`:
 
 ```markdown
+
 ---
-title: My Awesome Post
+
+title: Why Your Business Needs This
+
 date: 2025-01-20
-description: A brief description for SEO
-categories: Technology, Programming
-toc: true
+
+description: The truth about static sites
+
+categories: Business, Tech
+
 ---
 
-# Your content starts here
+Your content here. Write like a human.
 
-Write in **Markdown** with all the features you love!
 ```
 
-### Configuration
+### Make It Yours
 
-Edit `config.json` to customize your blog:
+Edit `config.json`:
 
 ```json
+
 {
-    "site_title": "My Blog",
-    "site_url": "https://yourdomain.com",
-    "site_description": "A blog about things I love",
-    "author": "Your Name",
-    "footer_text": "© 2025 Your Name",
-    "theme": "light"  // or "dark"
+
+"site_title": "Your Blog Name",
+
+"site_url": "https://yourdomain.com",
+
+"site_description": "What you're about",
+
+"author": "You",
+
+"theme": "dark" // or "light" if you're into that
+
 }
-```
-
-### Building
-
-```bash
-python3 build.py
-```
-
-This generates your entire site in the `output/` directory. Upload it anywhere that serves static files!
-
-## 🎨 Theming
-
-Tailoza uses a beautiful shadcn-inspired violet theme with both light and dark modes. The theme uses modern oklch colors for perfect perceptual uniformity.
-
-### Light Mode
-Clean and professional with subtle purple accents.
-
-### Dark Mode
-Easy on the eyes with excellent contrast.
-
-Switch themes by changing `"theme"` in config.json and rebuilding.
-
-## 📁 Project Structure
 
 ```
-tailoza/
-├── posts/          # Your markdown posts
-├── images/         # Post images
-├── assets/         # CSS and JS
-├── output/         # Generated site (git ignored)
-├── config.json     # Site configuration
-├── build.py        # Build script
-└── README.md       # You are here!
-```
 
-## 🛠️ Advanced Features
+### Categories (They Just Work)
 
-### Categories
-Organize posts with categories:
+Add categories to any post:
+
 ```yaml
-categories: Web Development, Tutorial, Python
+
+categories: Marketing, Business, Whatever
+
 ```
 
-Each category gets its own archive page at `/categories/category-name.html`
+Boom. Automatic category pages at `/categories/marketing.html`.
 
 ### Table of Contents
-Add `toc: true` to any post with 3+ headings to auto-generate a table of contents.
 
-### Syntax Highlighting
-Specify the language for beautiful code blocks:
-````markdown
-```python
-def hello():
-    print("Hello, Tailoza!")
-```
-````
+Got a long post? Add `toc: true` to the frontmatter. It'll generate a nice floating TOC from your headings. Your readers will thank you.
 
-### Smart Links
-- Regular links: `[text](url)`
-- Download links: Automatically detected with ⬇ indicator
-- Email links: `[Email me](mailto:you@example.com)`
+## The Philosophy (Why I Built This)
 
-## 🚢 Deployment
+I've built million-dollar businesses. I've also wasted countless hours on "modern" blogging platforms (all of them)
+
+Here's what I learned:
+
+- **Simple beats complex** - Every. Single. Time.
+
+- **Fast beats features** - Your readers don't care about your framework
+
+- **Writing beats configuring** - Spend time on content, not setup
+
+This tool does one thing: **turns markdown into a beautiful blog**.
+
+No more. No less.
+
+## Deploy This Thing
 
 ### GitHub Pages
-1. Build locally: `python3 build.py`
+
+1. Build: `python3 build.py`
+
 2. Push the `output/` folder
-3. Enable Pages in repository settings
 
-### Netlify/Vercel
-- Build command: `python3 build.py`
-- Publish directory: `output`
+3. Turn on Pages in settings
 
-### Traditional Hosting
-Just upload the `output/` folder to any web server!
+4. You're live
 
-## 🤝 Contributing
+### Anywhere Else
 
-Contributions are welcome! Whether it's:
-- 🐛 Bug fixes
-- ✨ New features
-- 📚 Documentation improvements
-- 🎨 Theme variations
+1. Build: `python3 build.py`
 
-Feel free to open an issue or submit a pull request.
+2. Upload the `output/` folder
 
-## 💡 Philosophy
+3. That's it
 
-Tailoza believes in:
-- **Simplicity over features** - Do one thing well
-- **Content over chrome** - Your words matter most
-- **Speed over everything** - Respect your readers' time
-- **Beauty by default** - Good design shouldn't be optional
+I'm not kidding. It's just HTML files.
 
-## 📜 License
+## Want to Contribute?
 
-MIT License - Use it however you want!
+Cool. I built this in a weekend, so there's probably room for improvement.
 
-## 🙏 Acknowledgments
+- Find a bug? Open an issue
 
-- Inspired by the simplicity of early web
-- Theme inspired by [shadcn/ui](https://ui.shadcn.com/)
-- Built with love over a weekend
+- Want a feature? PR it
+
+- Think something sucks? Tell me why
+
+Just keep it simple. That's the whole point.
+
+## One More Thing
+
+Stop overthinking your blog setup.
+
+Write some things that matter to you, and send it somewhere.
+
+Tailoza gets out of your way so you can focus on what matters: **your content**.
+
+Now stop reading this README and go write something.
 
 ---
 
-<p align="center">
-  Made with ❤️ by <a href="https://dustinhogate.com">Dustin Hogate</a>
-</p>
+Built with 🔥 by [Dustin Hogate](https://dustinhogate.com)
 
-<p align="center">
-  <strong>Stop configuring. Start writing.</strong>
-</p>
+P.S. - If this saves you time, use that time to hug your kids, walk your dog, or kiss your SO.
+
+P.P.S. - If you are mad about yet another blog repo - consider this: I built it for me, not you. But you are free to use it, copy it or ignore it.
