@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 import re
-import os
 from datetime import datetime
 import html
 
 def parse_frontmatter(content):
     """Extract frontmatter from markdown content"""
+    if not content:
+        return {}, content
+        
     lines = content.strip().split('\n')
-    if lines[0] != '---':
+    if not lines or lines[0] != '---':
         return {}, content
     
     frontmatter = {}
@@ -18,17 +20,21 @@ def parse_frontmatter(content):
             end_index = i + 1
             break
         if ':' in lines[i]:
-            key, value = lines[i].split(':', 1)
-            key = key.strip()
-            value = value.strip()
-            
-            # Handle categories as comma-separated list
-            if key == 'categories':
-                frontmatter[key] = [cat.strip() for cat in value.split(',') if cat.strip()]
-            else:
-                frontmatter[key] = value
+            try:
+                key, value = lines[i].split(':', 1)
+                key = key.strip()
+                value = value.strip()
+                
+                # Handle categories as comma-separated list
+                if key == 'categories':
+                    frontmatter[key] = [cat.strip() for cat in value.split(',') if cat.strip()]
+                else:
+                    frontmatter[key] = value
+            except ValueError:
+                # Skip malformed frontmatter lines
+                continue
     
-    body = '\n'.join(lines[end_index:])
+    body = '\n'.join(lines[end_index:]) if end_index < len(lines) else ''
     return frontmatter, body
 
 def markdown_to_html(text):

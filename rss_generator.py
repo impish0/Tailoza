@@ -34,5 +34,5 @@ def format_rss_date(date_str):
     try:
         date_obj = datetime.strptime(date_str, "%Y-%m-%d")
         return date_obj.strftime("%a, %d %b %Y 00:00:00 +0000")
-    except:
+    except ValueError:
         return datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000")

@@ -25,7 +25,7 @@ def load_config():
             with open(config_path, 'r') as f:
                 user_config = json.load(f)
                 default_config.update(user_config)
-        except Exception as e:
+        except (json.JSONDecodeError, IOError) as e:
             print(f"Warning: Could not load config.json: {e}")
     
     return default_config
@@ -75,7 +75,9 @@ def build_site():
             toc_html = ""
             if frontmatter.get('toc', '').lower() == 'true':
                 headings = extract_headings(html_content)
-                if len([h for h in headings if h['level'] > 1]) > 2:  # Only show TOC if 3+ headings
+                # Only show TOC if there are at least 3 headings (excluding H1)
+                MIN_HEADINGS_FOR_TOC = 3
+                if len([h for h in headings if h['level'] > 1]) >= MIN_HEADINGS_FOR_TOC:
                     toc_html = generate_toc(headings)
                     html_content = add_heading_ids(html_content, headings)
             
