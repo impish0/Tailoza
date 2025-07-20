@@ -3,6 +3,7 @@ title: CSS For This Site
 date: 2025-07-16
 keywords: Calude, Email Marketing, Email Copy
 author: Dustin Hogate
+toc: true
 description: An introduction system prompts I use for email marketing content.
 ---
 
@@ -12,7 +13,7 @@ I spent the last 3 years building high converting email content for D2C Ecommerc
 
 This is the Claude system prompt I use to aid in email writing copy.
 
-```
+```css
 :root {
     --bg-color: #ffffff;
     --text-color: #333333;

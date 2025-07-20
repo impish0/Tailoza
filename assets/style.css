@@ -1,10 +1,36 @@
+/* Light theme (default) */
 :root {
     --bg-color: #ffffff;
     --text-color: #333333;
+    --text-secondary: #666666;
     --link-color: #0066cc;
     --border-color: #e0e0e0;
     --code-bg: #f5f5f5;
+    --code-text: #333333;
+    --blockquote-color: #666666;
+    --table-header-bg: #f5f5f5;
+    --table-alt-bg: rgba(0, 0, 0, 0.02);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --toc-bg: #f8f9fa;
+    --toc-border: #e9ecef;
     --max-width: 700px;
+}
+
+/* Dark theme */
+:root[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --link-color: #66b3ff;
+    --border-color: #333333;
+    --code-bg: #2d2d2d;
+    --code-text: #f8f8f2;
+    --blockquote-color: #a0a0a0;
+    --table-header-bg: #2d2d2d;
+    --table-alt-bg: rgba(255, 255, 255, 0.02);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --toc-bg: #242424;
+    --toc-border: #333333;
 }
 
 * {
@@ -14,7 +40,7 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--bg-color);
@@ -67,7 +93,7 @@ article h3 {
 }
 
 article .post-meta {
-    color: #666;
+    color: var(--text-secondary);
     font-size: 0.9em;
     margin-bottom: 20px;
 }
@@ -104,6 +130,7 @@ article li {
 
 article code {
     background-color: var(--code-bg);
+    color: var(--code-text);
     padding: 2px 5px;
     border-radius: 3px;
     font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
@@ -144,6 +171,22 @@ article pre:hover .copy-button {
     background: rgba(255, 255, 255, 0.2);
 }
 
+/* Categories */
+.categories a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.categories a:hover {
+    text-decoration: underline;
+}
+
+.post-preview .categories {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+
 article pre code {
     background-color: transparent;
     padding: 0;
@@ -151,12 +194,59 @@ article pre code {
     word-wrap: break-word;
 }
 
+/* Tables */
+article table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+article table th,
+article table td {
+    border: 1px solid var(--border-color);
+    padding: 8px 12px;
+    text-align: left;
+}
+
+article table th {
+    background-color: var(--table-header-bg);
+    font-weight: 600;
+}
+
+article table tr:nth-child(even) {
+    background-color: var(--table-alt-bg);
+}
+
+/* Blockquotes */
 article blockquote {
     border-left: 4px solid var(--border-color);
     padding-left: 20px;
     margin: 20px 0;
+    color: var(--blockquote-color);
     font-style: italic;
-    color: #666;
+}
+
+article blockquote blockquote {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* Strikethrough */
+article del {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+}
+
+/* Task lists */
+article input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* Horizontal rules */
+article hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 30px 0;
 }
 
 article img {
@@ -165,7 +255,7 @@ article img {
     border-radius: 8px;
     margin: 20px 0;
     display: block;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px var(--shadow-color);
 }
 
 .post-preview {
@@ -193,7 +283,7 @@ article img {
 }
 
 .post-preview time {
-    color: #666;
+    color: var(--text-secondary);
     font-size: 0.9em;
 }
 
@@ -206,7 +296,7 @@ footer {
     padding-top: 20px;
     border-top: 1px solid var(--border-color);
     text-align: center;
-    color: #666;
+    color: var(--text-secondary);
     font-size: 0.9em;
 }
 
@@ -217,6 +307,85 @@ footer a {
 
 footer a:hover {
     text-decoration: underline;
+}
+
+/* Table of Contents */
+.toc-card {
+    background-color: var(--toc-bg);
+    border: 1px solid var(--toc-border);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 30px 0;
+    max-width: 600px;
+}
+
+.toc-title {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin: 0 0 15px 0;
+    color: var(--text-color);
+}
+
+.toc ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+/* Nested lists */
+.toc ul ul {
+    padding-left: 20px;
+    margin-top: 4px;
+}
+
+.toc li {
+    margin-bottom: 6px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.toc li:before {
+    content: "›";
+    position: absolute;
+    left: 0;
+    color: var(--link-color);
+    font-weight: bold;
+}
+
+/* Different bullets for nested levels */
+.toc ul ul li:before {
+    content: "•";
+    font-size: 0.8em;
+}
+
+.toc ul ul ul li:before {
+    content: "◦";
+    font-size: 0.7em;
+}
+
+.toc a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.toc a:hover {
+    text-decoration: underline;
+    padding-left: 5px;
+}
+
+/* Remove smooth scroll - instant jump is better */
+html {
+    scroll-padding-top: 10px;
+}
+
+/* Add some space before headings for anchor links */
+article h2[id],
+article h3[id],
+article h4[id],
+article h5[id],
+article h6[id] {
+    scroll-margin-top: 10px;
 }
 
 @media (max-width: 600px) {

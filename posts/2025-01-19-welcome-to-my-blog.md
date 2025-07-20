@@ -1,6 +1,7 @@
 ---
 title: Welcome to My Blog
 date: 2025-01-19
+toc: true
 description: An introduction to my new static blog built with a simple markdown-based generator
 ---
 

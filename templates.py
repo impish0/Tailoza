@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
-def post_template(title, content, date, description="", keywords="", author="", image=""):
+def post_template(title, content, date, description="", keywords="", author="", image="", toc="", url="", config={}, categories=[]):
     """Generate HTML for a blog post with enhanced SEO"""
+    theme = config.get('theme', 'light')
     return f"""<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="{theme}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,11 +12,16 @@ def post_template(title, content, date, description="", keywords="", author="", 
     <title>{title}</title>
     
     <!-- SEO Meta Tags -->
+    <meta name="robots" content="index, follow">
     <meta name="author" content="{author or 'Dustin Hogate'}">
     {f'<meta name="keywords" content="{keywords}">' if keywords else ''}
+    {f'<link rel="canonical" href="{url}">' if url else ''}
+    
+    <!-- Open Graph -->
     <meta property="og:title" content="{title}">
     <meta property="og:description" content="{description or title}">
     <meta property="og:type" content="article">
+    {f'<meta property="og:url" content="{url}">' if url else ''}
     {f'<meta property="og:image" content="{image}">' if image else ''}
     <meta property="article:published_time" content="{date}">
     {f'<meta property="article:author" content="{author}">' if author else ''}
@@ -29,6 +35,31 @@ def post_template(title, content, date, description="", keywords="", author="", 
     <link rel="stylesheet" href="../assets/style.css">
     <link rel="stylesheet" href="../assets/prism.css">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../rss.xml">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "{title}",
+        "description": "{description or title}",
+        "datePublished": "{date}",
+        "dateModified": "{date}",
+        {f'"image": "{image}",' if image else ''}
+        "author": {{
+            "@type": "Person",
+            "name": "{author or config.get('author', 'Dustin Hogate')}"
+        }},
+        "publisher": {{
+            "@type": "Person",
+            "name": "Dustin Hogate"
+        }},
+        "mainEntityOfPage": {{
+            "@type": "WebPage",
+            "@id": "{url}"
+        }}
+    }}
+    </script>
 </head>
 <body>
     <header>
@@ -42,7 +73,9 @@ def post_template(title, content, date, description="", keywords="", author="", 
             <div class="post-meta">
                 <time datetime="{date}">{date}</time>
                 {f' • <span class="author">{author}</span>' if author else ''}
+                {' • <span class="categories">' + ', '.join([f'<a href="../categories/{cat.lower().replace(" ", "-")}.html">{cat}</a>' for cat in categories]) + '</span>' if categories else ''}
             </div>
+            {toc}
             {content}
         </article>
     </main>
@@ -88,17 +121,23 @@ def post_template(title, content, date, description="", keywords="", author="", 
 
 def index_template(posts, config):
     """Generate HTML for the index page"""
+    theme = config.get('theme', 'light')
     post_list = ""
     for post in posts:
+        categories_html = ""
+        if post.get('categories'):
+            category_links = [f'<a href="categories/{cat.lower().replace(" ", "-")}.html">{cat}</a>' for cat in post['categories']]
+            categories_html = f' • <span class="categories">{", ".join(category_links)}</span>'
+        
         post_list += f"""
         <article class="post-preview">
             <h2><a href="posts/{post['filename']}">{post['title']}</a></h2>
-            <time datetime="{post['date']}">{post['date']}</time>
+            <time datetime="{post['date']}">{post['date']}</time>{categories_html}
             {f"<p>{post['description']}</p>" if post.get('description') else ""}
         </article>"""
     
     return f"""<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="{theme}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -115,6 +154,46 @@ def index_template(posts, config):
         </nav>
     </header>
     <main>
+        <section class="posts">
+            {post_list}
+        </section>
+    </main>
+    <footer>
+        <p>{config['footer_text']}</p>
+    </footer>
+</body>
+</html>"""
+
+def category_template(category_name, posts, config):
+    """Generate HTML for a category page"""
+    theme = config.get('theme', 'light')
+    post_list = ""
+    for post in posts:
+        post_list += f"""
+        <article class="post-preview">
+            <h2><a href="../posts/{post['filename']}">{post['title']}</a></h2>
+            <time datetime="{post['date']}">{post['date']}</time>
+            {f"<p>{post['description']}</p>" if post.get('description') else ""}
+        </article>"""
+    
+    return f"""<!DOCTYPE html>
+<html lang="en" data-theme="{theme}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Posts in {category_name} category">
+    <title>{category_name} - {config['site_title']}</title>
+    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../rss.xml">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../index.html">← Home</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Category: {category_name}</h1>
         <section class="posts">
             {post_list}
         </section>

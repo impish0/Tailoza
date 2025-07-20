@@ -3,6 +3,7 @@ title: Claude 4 Pormpt For High Performance Email
 date: 2025-07-19
 keywords: Calude, Email Marketing, Email Copy
 author: Dustin Hogate
+toc: true
 description: An introduction system prompts I use for email marketing content.
 ---
 
