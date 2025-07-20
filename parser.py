@@ -68,7 +68,20 @@ def markdown_to_html(text):
     
     # Now process markdown on the remaining text
     # Images (before links to avoid conflicts)
-    text = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', r'<img src="\2" alt="\1" loading="lazy">', text)
+    def process_image(match):
+        alt_text = match.group(1)
+        img_path = match.group(2)
+        # If it's a local image (not http/https), prepend ../ for correct path from posts folder
+        if not img_path.startswith(('http://', 'https://', '/')):
+            # Handle both 'images/file.jpg' and 'file.jpg' formats
+            if not img_path.startswith('../'):
+                if img_path.startswith('images/'):
+                    img_path = '../' + img_path
+                else:
+                    img_path = '../images/' + img_path
+        return f'<img src="{img_path}" alt="{alt_text}" loading="lazy">'
+    
+    text = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', process_image, text)
     
     # Headers
     text = re.sub(r'^###### (.*?)$', r'<h6>\1</h6>', text, flags=re.MULTILINE)

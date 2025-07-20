@@ -1,102 +1,163 @@
 ---
-title: Welcome to Tailoza
-date: 2025-01-20
-description: Get started with the simplest static blog generator
+title: Tailoza Example Post
+date: 2024-01-20
+description: This post demonstrates every single feature available in Tailoza - images, code blocks, tables, lists, and more
 categories: Tutorial, Getting Started
+keywords: tailoza, blog, example, tutorial, markdown
+author: Your Name Here
+image: jonas-degener-XhKNRG0ZVDM-unsplash.jpg
 toc: true
 ---
 
-# Welcome to Tailoza!
+This is the ultimate example post showing off everything Tailoza can do. Use this as a template for your own posts.
 
-This is an example post showing all the features of Tailoza. Feel free to delete this and start writing your own content!
+## Images
 
-## Markdown Features
+You can add images three ways:
 
-### Text Formatting
+### Local Images
+![Local Image Example](neom-0SUho_B0nus-unsplash.jpg)
 
-You can write in **bold**, *italic*, or ***both***. You can also use ~~strikethrough~~ text.
+### External Images
+![External Image](https://picsum.photos/800/400)
 
-### Lists
+### Images with Specific Paths
+![Coffee Beans](images/jonas-degener-XhKNRG0ZVDM-unsplash.jpg)
 
-Unordered lists:
-- First item
-- Second item
-  - Nested item
-  - Another nested item
-- Third item
+## Code Blocks
 
-Ordered lists:
-1. First step
-2. Second step
-3. Third step
+Tailoza supports syntax highlighting for all major languages:
 
-Task lists:
-- [x] Install Tailoza
-- [x] Create first post
-- [ ] Deploy to production
-
-### Links and Images
-
-Create [links to websites](https://github.com/impish0/Tailoza) or [download files](/documents/guide.pdf).
-
-Add images from the `/images/` folder or external URLs:
-```markdown
-![Alt text](/images/example.jpg)
+### JavaScript
+```javascript
+// A simple React component
+const BlogPost = ({ title, content, date }) => {
+    const [likes, setLikes] = useState(0);
+    
+    return (
+        <article>
+            <h1>{title}</h1>
+            <time>{date}</time>
+            <div dangerouslySetInnerHTML={{ __html: content }} />
+            <button onClick={() => setLikes(likes + 1)}>
+                👍 {likes}
+            </button>
+        </article>
+    );
+};
 ```
 
-### Code Blocks
+### Python
+```python
+def parse_markdown(content):
+    """Convert markdown to HTML with frontmatter support"""
+    if content.startswith('---'):
+        _, frontmatter, body = content.split('---', 2)
+        metadata = yaml.safe_load(frontmatter)
+        html = markdown.markdown(body)
+        return metadata, html
+    return {}, markdown.markdown(content)
+```
 
-Inline code: `python3 build.py`
-
-Fenced code blocks with syntax highlighting:
-
-```typescript
-/**
- * Calculates the reading time for a blog post
- * @param text - The blog post content
- * @param wordsPerMinute - Average reading speed (default: 200)
- * @returns Estimated reading time in minutes
- */
-function calculateReadingTime(text: string, wordsPerMinute: number = 200): number {
-  // Remove extra whitespace and split into words
-  const words = text.trim().split(/\s+/);
-  const wordCount = words.length;
-  
-  // Calculate reading time and round up
-  const readingTime = Math.ceil(wordCount / wordsPerMinute);
-  
-  return readingTime;
+### CSS
+```css
+/* Tailoza's clean styling */
+.post-preview {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
-// Example usage
-const blogPost = "This is a sample blog post with some content...";
-const minutes = calculateReadingTime(blogPost);
-console.log(`Estimated reading time: ${minutes} minute${minutes > 1 ? 's' : ''}`);
+.post-preview:hover h2 {
+    color: var(--primary);
+}
 ```
 
-### Blockquotes
+### Plain Code Block (no language)
+```
+This is a code block without syntax highlighting.
+It's useful for configuration files, logs, or plain text.
+The copy button still works!
+```
+
+## Tables
+
+Tables are great for comparing options:
+
+| Feature | Tailoza | WordPress | Medium |
+|---------|---------|-----------|---------|
+| Speed | Lightning ⚡ | Slow | Fast |
+| Control | Total | Some | None |
+| Cost | Free | $5-500/mo | Free-$50/mo |
+| Markdown | Native | Plugin | Limited |
+| Privacy | Full | Questionable | None |
+
+## Lists
+
+### Unordered Lists
+- Simple bullet points
+- Clean and readable
+- Can be nested
+  - Like this
+  - And this
+    - Even deeper
+- Back to top level
+
+### Ordered Lists
+1. First item
+2. Second item
+3. Third item with substeps:
+   1. Substep one
+   2. Substep two
+4. Fourth item
+
+### Task Lists
+- [x] Create blog post
+- [x] Add images
+- [ ] Share on social media
+- [ ] Respond to comments
+
+## Text Formatting
+
+You can make text **bold** or *italic* or ***both***. You can also ~~strike through~~ text that's no longer relevant.
+
+## Blockquotes
 
 > "The best time to plant a tree was 20 years ago. The second best time is now."
 > 
-> — Chinese Proverb
+> This is especially true for starting a blog. Don't wait for the perfect platform or the perfect post idea.
 
-### Tables
+## Links
 
-| Feature | Status | Notes |
-|---------|--------|-------|
-| Markdown | ✅ | Full CommonMark support |
-| Categories | ✅ | Organize your content |
-| RSS Feed | ✅ | For your readers |
-| SEO | ✅ | Built-in optimization |
+- [Internal link to another post](../posts/example-post.html)
+- [External link to documentation](https://github.com/your-username/tailoza)
+- [Download a file](../assets/example.pdf) ⬇
 
-## Building Your Blog
+## Horizontal Rules
 
-1. Write posts in the `posts/` directory
-2. Run `python3 build.py`
-3. Deploy the `output/` folder
-
-That's it! No complex configuration, no database setup, just write and publish.
+Sometimes you need a visual break:
 
 ---
 
-Happy blogging with Tailoza! 🎨
+Like that. Simple but effective.
+
+## Inline Code
+
+You can mention `variables`, `function names()`, or `file-paths.md` inline. Great for technical writing.
+
+## The Power of Simplicity
+
+This post demonstrates that you don't need a complex CMS to create beautiful, functional blog posts. With Tailoza, you write in markdown, run a build command, and get a fast, clean website.
+
+### Why This Matters
+
+1. **No Database** = No security vulnerabilities
+2. **Plain Files** = Version control with Git
+3. **Static HTML** = Blazing fast load times
+4. **Your Content** = You own everything
+
+## Conclusion
+
+Copy this post, modify it for your needs, and start blogging. The web needs more independent voices, not more Medium posts behind paywalls.
+
+Remember: **Done is better than perfect**. Ship it.

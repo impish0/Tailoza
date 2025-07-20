@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Test - Light and Dark Theme</title>
+    <link rel="stylesheet" href="output/assets/style.css">
+    <style>
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: var(--primary-foreground);
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .demo-container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .demo-header {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: var(--foreground);
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+    
+    <div class="demo-container">
+        <h2>Categories Dropdown Demo</h2>
+        
+        <div class="demo-header">
+            <nav>
+                <div class="dropdown">
+                    <button class="dropdown-toggle">Categories</button>
+                    <div class="dropdown-menu">
+                        <a href="#">Environment</a>
+                        <a href="#">Finance</a>
+                        <a href="#">Food</a>
+                        <a href="#">Getting Started</a>
+                        <a href="#">Health</a>
+                        <a href="#">Home</a>
+                        <a href="#">Lifestyle</a>
+                        <a href="#">Personal Development</a>
+                        <a href="#">Productivity</a>
+                        <a href="#">Programming</a>
+                        <a href="#">Technology</a>
+                        <a href="#">Travel</a>
+                        <a href="#">Tutorial</a>
+                        <a href="#">Wellness</a>
+                    </div>
+                </div>
+                <span class="nav-separator">|</span>
+                <a href="#">RSS</a>
+            </nav>
+        </div>
+        
+        <p style="color: var(--muted-foreground); line-height: 1.6;">
+            This dropdown menu:
+            <ul style="color: var(--muted-foreground); line-height: 1.8; padding-left: 20px;">
+                <li>Works without JavaScript (pure CSS hover)</li>
+                <li>Supports both light and dark themes</li>
+                <li>Handles many categories with scrolling</li>
+                <li>Has smooth transitions and animations</li>
+                <li>Maintains accessibility with focus states</li>
+            </ul>
+        </p>
+    </div>
+    
+    <script>
+        // Set initial theme
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+    </script>
+</body>
+</html>

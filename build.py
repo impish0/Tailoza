@@ -31,7 +31,14 @@ def load_config():
     return default_config
 
 def ensure_directories():
-    """Ensure all required directories exist"""
+    """Clean output directory and ensure all required directories exist"""
+    # First, remove the output directory if it exists
+    output_path = Path('output')
+    if output_path.exists():
+        shutil.rmtree(output_path)
+        print("✓ Cleaned output directory")
+    
+    # Now create all required directories
     dirs = ['posts', 'output', 'output/posts', 'output/assets', 'output/assets/js', 'output/images', 'output/categories', 'images', 'assets', 'assets/js']
     for dir_path in dirs:
         Path(dir_path).mkdir(parents=True, exist_ok=True)
@@ -42,6 +49,22 @@ def build_site():
     ensure_directories()
     posts = []
     categories = {}  # Dict to store posts by category
+    
+    # Check for favicon early
+    favicon_files = ['favicon.ico', 'favicon.png', 'favicon.svg']
+    for favicon in favicon_files:
+        favicon_path = Path('assets') / favicon
+        if favicon_path.exists():
+            config['favicon'] = favicon
+            break
+    
+    if 'favicon' not in config:
+        # Check in root directory as well
+        for favicon in favicon_files:
+            favicon_path = Path(favicon)
+            if favicon_path.exists():
+                config['favicon'] = favicon
+                break
     
     # Process all markdown files in posts directory
     posts_dir = Path('posts')
@@ -184,6 +207,20 @@ Sitemap: {config['site_url']}/sitemap.xml"""
                 if img.is_file():
                     shutil.copy2(img, f'output/images/{img.name}')
             print("✓ Copied images")
+        
+        # Copy favicon if it exists
+        if 'favicon' in config:
+            favicon = config['favicon']
+            favicon_path = Path('assets') / favicon
+            if favicon_path.exists():
+                shutil.copy2(favicon_path, f'output/{favicon}')
+                print(f"✓ Copied {favicon}")
+            else:
+                # Check in root directory
+                favicon_path = Path(favicon)
+                if favicon_path.exists():
+                    shutil.copy2(favicon_path, f'output/{favicon}')
+                    print(f"✓ Copied {favicon}")
     
     except Exception as e:
         print(f"Error copying assets: {e}")

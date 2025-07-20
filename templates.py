@@ -3,6 +3,17 @@
 def post_template(title, content, date, description="", keywords="", author="", image="", toc="", url="", config={}, categories=[]):
     """Generate HTML for a blog post with enhanced SEO"""
     theme = config.get('theme', 'light')
+    
+    # Build absolute image URL if image is provided
+    image_url = ""
+    if image:
+        if image.startswith(('http://', 'https://')):
+            image_url = image
+        else:
+            # Remove any leading slashes or 'images/' prefix
+            clean_image = image.replace('images/', '').lstrip('/')
+            image_url = f"{config.get('site_url', '')}/images/{clean_image}"
+    
     return f"""<!DOCTYPE html>
 <html lang="en" data-theme="{theme}">
 <head>
@@ -13,7 +24,7 @@ def post_template(title, content, date, description="", keywords="", author="", 
     
     <!-- SEO Meta Tags -->
     <meta name="robots" content="index, follow">
-    <meta name="author" content="{author or 'Dustin Hogate'}">
+    <meta name="author" content="{author or config.get('author', 'Me')}">
     {f'<meta name="keywords" content="{keywords}">' if keywords else ''}
     {f'<link rel="canonical" href="{url}">' if url else ''}
     
@@ -22,7 +33,7 @@ def post_template(title, content, date, description="", keywords="", author="", 
     <meta property="og:description" content="{description or title}">
     <meta property="og:type" content="article">
     {f'<meta property="og:url" content="{url}">' if url else ''}
-    {f'<meta property="og:image" content="{image}">' if image else ''}
+    {f'<meta property="og:image" content="{image_url}">' if image_url else ''}
     <meta property="article:published_time" content="{date}">
     {f'<meta property="article:author" content="{author}">' if author else ''}
     
@@ -30,11 +41,14 @@ def post_template(title, content, date, description="", keywords="", author="", 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{title}">
     <meta name="twitter:description" content="{description or title}">
-    {f'<meta name="twitter:image" content="{image}">' if image else ''}
+    {f'<meta name="twitter:image" content="{image_url}">' if image_url else ''}
     
     <link rel="stylesheet" href="../assets/style.css">
     <link rel="stylesheet" href="../assets/prism.css">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../rss.xml">
+    {f'<link rel="icon" type="image/x-icon" href="../favicon.ico">' if config.get('favicon') == 'favicon.ico' else ''}
+    {f'<link rel="icon" type="image/png" href="../favicon.png">' if config.get('favicon') == 'favicon.png' else ''}
+    {f'<link rel="icon" type="image/svg+xml" href="../favicon.svg">' if config.get('favicon') == 'favicon.svg' else ''}
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -45,7 +59,7 @@ def post_template(title, content, date, description="", keywords="", author="", 
         "description": "{description or title}",
         "datePublished": "{date}",
         "dateModified": "{date}",
-        {f'"image": "{image}",' if image else ''}
+        {f'"image": "{image_url}",' if image_url else ''}
         "author": {{
             "@type": "Person",
             "name": "{author or config.get('author', 'Dustin Hogate')}"
@@ -187,13 +201,18 @@ def index_template(posts, config, categories=None):
     # Build category navigation
     category_nav = ""
     if categories:
-        category_links = []
+        category_items = []
         for category in categories:
             category_url = f"categories/{category.lower().replace(' ', '-')}.html"
-            category_links.append(f'<a href="{category_url}">{category}</a>')
-        category_nav = ''.join(category_links)
-        if category_nav:
-            category_nav += '<span class="nav-separator">|</span>'
+            category_items.append(f'<a href="{category_url}">{category}</a>')
+        
+        category_nav = f'''<div class="dropdown">
+            <button class="dropdown-toggle">Categories</button>
+            <div class="dropdown-menu">
+                {''.join(category_items)}
+            </div>
+        </div>
+        <span class="nav-separator">|</span>'''
     
     return f"""<!DOCTYPE html>
 <html lang="en" data-theme="{theme}">
@@ -204,6 +223,9 @@ def index_template(posts, config, categories=None):
     <title>{config['site_title']}</title>
     <link rel="stylesheet" href="assets/style.css">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="rss.xml">
+    {f'<link rel="icon" type="image/x-icon" href="favicon.ico">' if config.get('favicon') == 'favicon.ico' else ''}
+    {f'<link rel="icon" type="image/png" href="favicon.png">' if config.get('favicon') == 'favicon.png' else ''}
+    {f'<link rel="icon" type="image/svg+xml" href="favicon.svg">' if config.get('favicon') == 'favicon.svg' else ''}
 </head>
 <body>
     <header>
@@ -245,6 +267,9 @@ def category_template(category_name, posts, config):
     <title>{category_name} - {config['site_title']}</title>
     <link rel="stylesheet" href="../assets/style.css">
     <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../rss.xml">
+    {f'<link rel="icon" type="image/x-icon" href="../favicon.ico">' if config.get('favicon') == 'favicon.ico' else ''}
+    {f'<link rel="icon" type="image/png" href="../favicon.png">' if config.get('favicon') == 'favicon.png' else ''}
+    {f'<link rel="icon" type="image/svg+xml" href="../favicon.svg">' if config.get('favicon') == 'favicon.svg' else ''}
 </head>
 <body>
     <header>

@@ -94,26 +94,24 @@ Upload that folder literally anywhere that serves HTML. GitHub Pages, Netlify, y
 
 ### Writing Posts
 
-
-Drop your markdown files in `posts/`:
+Drop markdown files in `posts/`. Here's everything you can use:
 
 ```markdown
-
 ---
-
-title: Why Your Business Needs This
-
-date: 2025-01-20
-
-description: The truth about static sites
-
-categories: Business, Tech
-
+title: Your Post Title
+date: 2024-01-20
+description: A short description for SEO and previews
+categories: Business, Tech, Whatever
+keywords: seo, keywords, optional
+author: Your Name (optional - uses config default)
+image: hero-image.jpg (for social media previews)
+toc: true (generates table of contents for long posts)
 ---
 
 Your content here. Write like a human.
-
 ```
+
+Check out `posts/complete-example.md` for a full demo of every feature.
 
 
 ### Make It Yours
@@ -139,6 +137,30 @@ Edit `config.json`:
 
 ```
 
+### Images (Drop 'em In)
+
+Put images in the `images/` folder. Reference them in your posts:
+
+```markdown
+![Description](image-name.jpg)
+```
+
+Or if you're feeling specific:
+
+```markdown
+![Description](images/image-name.jpg)
+```
+
+Both work. The build process sorts out the paths.
+
+### Favicon
+
+Want a favicon? Drop one of these in your project root or assets folder:
+- `favicon.ico`
+- `favicon.png` 
+- `favicon.svg`
+
+The build finds it and adds it to your site. No config needed.
 
 ### Categories (They Just Work)
 
@@ -152,6 +174,16 @@ categories: Marketing, Business, Whatever
 ```
 
 Boom. Automatic category pages at `/categories/marketing.html`.
+
+### Social Preview Images
+
+Want a nice preview when your post gets shared on Twitter/LinkedIn/Whatever?
+
+```yaml
+image: hero-image.jpg
+```
+
+Put it in your frontmatter. The image shows up in social cards. That's it.
 
 ### Table of Contents
 
