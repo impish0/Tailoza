@@ -73,11 +73,15 @@ def build_site():
         return False
     
     for post_file in sorted(posts_dir.glob('*.md')):
+        filename = post_file.name
+        
+        # Skip draft posts (files starting with underscore)
+        if filename.startswith('_'):
+            continue
+            
         try:
             with open(post_file, 'r', encoding='utf-8') as f:
                 content = f.read()
-            
-            filename = post_file.name
             
             # Parse frontmatter and content
             frontmatter, body = parse_frontmatter(content)

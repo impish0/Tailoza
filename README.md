@@ -94,25 +94,36 @@ Upload that folder literally anywhere that serves HTML. GitHub Pages, Netlify, y
 
 ### Writing Posts
 
-Drop markdown files in `posts/`. Here's everything you can use:
+Drop markdown files in `posts/`. Here's all the frontmatter options:
 
 ```markdown
 ---
-title: Your Post Title
-date: 2024-01-20
-description: A short description for SEO and previews
-categories: Business, Tech, Whatever
-keywords: seo, keywords, optional
-author: Your Name (optional - uses config default)
-image: hero-image.jpg (for social media previews)
-toc: true (generates table of contents for long posts)
+title: Your Post Title                               # Required
+date: 2024-01-20                                    # Required (YYYY-MM-DD)
+description: Short SEO description                   # Shows in previews & search results
+categories: Business, Tech, Whatever                 # Comma-separated, creates category pages
+keywords: seo, keywords, for, google                # Optional SEO boost
+author: Your Name                                   # Optional, defaults to config
+image: hero-image.jpg                               # Social media preview image
+toc: true                                          # Auto-generates table of contents
 ---
 
 Your content here. Write like a human.
 ```
 
-Check out `posts/complete-example.md` for a full demo of every feature.
+**Pro tip**: Check out `posts/example-post.md` for a full demo of every feature in action.
 
+### Draft Posts
+
+Working on something not ready for prime time? Prefix your filename with underscore:
+
+```
+_draft-post.md      # Won't be published
+_ideas.md           # Ignored by build
+my-post.md          # This one gets built
+```
+
+Simple. No "draft: true" nonsense. Just underscore it.
 
 ### Make It Yours
 
@@ -142,10 +153,18 @@ Edit `config.json`:
 Put images in the `images/` folder. Reference them in your posts:
 
 ```markdown
-![Description](image-name.jpg)
+![Your alt text here](image-name.jpg)
 ```
 
-Or if you're feeling specific:
+Whatever you put in the square brackets becomes the alt text. Be descriptive - it helps with SEO and accessibility:
+
+```markdown
+![Team celebrating product launch](team-photo.jpg)     # Good
+![IMG_1234](team-photo.jpg)                           # Bad
+![](team-photo.jpg)                                   # Terrible
+```
+
+You can also use the full path if you want:
 
 ```markdown
 ![Description](images/image-name.jpg)
