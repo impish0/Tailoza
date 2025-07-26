@@ -157,7 +157,8 @@ Edit `config.json`:
   "posts_per_page": 20,                   // Posts per page before pagination
   "timezone": "+0000",                    // Your timezone for RSS feeds (e.g., "-0500" for EST)
   "post_url_prefix": "/posts",            // URL structure for posts (see below)
-  "plausible_domain": "yourdomain.com"     // Optional: Enable Plausible Analytics
+  "plausible_domain": "yourdomain.com",    // Optional: Enable Plausible Analytics
+  "plausible_options": ["hash"]           // Optional: Advanced Plausible tracking
 }
 ```
 
@@ -176,6 +177,7 @@ Edit `config.json`:
   - `"/blog"` → `yourdomain.com/blog/my-post.html`
   - `""` (empty) → `yourdomain.com/my-post.html`
 - **plausible_domain**: Your domain for Plausible Analytics (optional, leave empty to disable)
+- **plausible_options**: Advanced Plausible tracking options (optional array)
 
 **Migrating from another platform?** The `post_url_prefix` option helps preserve your SEO when moving from WordPress, Ghost, or other platforms.
 
@@ -255,6 +257,22 @@ Want to see who's reading your stuff? Add this to your `config.json`:
 ```
 
 That's it. Tailoza automatically adds the Plausible Analytics script to every page.
+
+**Want more detailed tracking?** Add advanced options:
+
+```json
+{
+  "plausible_domain": "yourdomain.com",
+  "plausible_options": ["hash", "outbound-links", "file-downloads"]
+}
+```
+
+**Available options:**
+- `hash` - Track heading/anchor clicks (perfect for TOC links)
+- `outbound-links` - Track external link clicks  
+- `file-downloads` - Track PDF/file downloads
+- `404` - Track 404 error pages
+- `custom-events` - Enable custom event tracking
 
 **Why Plausible?**
 - Privacy-focused (no cookies, GDPR compliant)

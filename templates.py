@@ -144,7 +144,7 @@ def post_template(title, content, date, description="", keywords="", author="", 
     {f'<link rel="icon" type="image/svg+xml" href="../favicon.svg">' if config.get('favicon') == 'favicon.svg' else ''}
     
     <!-- Plausible Analytics -->
-    {f'<script defer data-domain="{html.escape(config["plausible_domain"], quote=True)}" src="https://plausible.io/js/script.js"></script>' if config.get('plausible_domain') else ''}
+    {f'<script defer data-domain="{html.escape(config["plausible_domain"], quote=True)}" src="{config.get("plausible_script_url", "https://plausible.io/js/script.js")}"></script>' if config.get('plausible_domain') else ''}
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -250,7 +250,7 @@ def index_template(posts, config, categories=None, pagination=None, post_prefix=
     {f'<link rel="icon" type="image/svg+xml" href="favicon.svg">' if config.get('favicon') == 'favicon.svg' else ''}
     
     <!-- Plausible Analytics -->
-    {f'<script defer data-domain="{html.escape(config["plausible_domain"], quote=True)}" src="https://plausible.io/js/script.js"></script>' if config.get('plausible_domain') else ''}
+    {f'<script defer data-domain="{html.escape(config["plausible_domain"], quote=True)}" src="{config.get("plausible_script_url", "https://plausible.io/js/script.js")}"></script>' if config.get('plausible_domain') else ''}
 </head>
 <body>
     <header>
@@ -319,7 +319,7 @@ def category_template(category_name, posts, config, pagination=None, post_prefix
     {f'<link rel="icon" type="image/svg+xml" href="../favicon.svg">' if config.get('favicon') == 'favicon.svg' else ''}
     
     <!-- Plausible Analytics -->
-    {f'<script defer data-domain="{html.escape(config["plausible_domain"], quote=True)}" src="https://plausible.io/js/script.js"></script>' if config.get('plausible_domain') else ''}
+    {f'<script defer data-domain="{html.escape(config["plausible_domain"], quote=True)}" src="{config.get("plausible_script_url", "https://plausible.io/js/script.js")}"></script>' if config.get('plausible_domain') else ''}
 </head>
 <body>
     <header>

@@ -10,6 +10,7 @@ from rss_generator import generate_rss
 from sitemap_generator import generate_sitemap
 import re
 import html
+from plausible_helper import build_plausible_script_url
 
 def process_config_html(text):
     """Safely process HTML links in config text while escaping other content"""
@@ -72,7 +73,8 @@ def load_config():
         "footer_text": "Built with a simple static site generator",
         "posts_per_page": 20,
         "timezone": "+0000",
-        "plausible_domain": ""
+        "plausible_domain": "",
+        "plausible_options": []
     }
     
     config_path = Path('config.json')
@@ -89,6 +91,11 @@ def load_config():
     # Process HTML in footer_text if it exists
     if 'footer_text' in validated_config:
         validated_config['footer_text_html'] = process_config_html(validated_config['footer_text'])
+    
+    # Build Plausible script URL if domain is set
+    if validated_config.get('plausible_domain'):
+        plausible_options = validated_config.get('plausible_options', [])
+        validated_config['plausible_script_url'] = build_plausible_script_url(plausible_options)
     
     return validated_config
 
