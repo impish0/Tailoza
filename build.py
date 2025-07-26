@@ -71,7 +71,8 @@ def load_config():
         "author": "Your Name",
         "footer_text": "Built with a simple static site generator",
         "posts_per_page": 20,
-        "timezone": "+0000"
+        "timezone": "+0000",
+        "plausible_domain": ""
     }
     
     config_path = Path('config.json')

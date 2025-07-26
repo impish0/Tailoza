@@ -64,6 +64,7 @@ Primary config in `config.json` with these key settings:
 - `theme` - "dark" or "light" mode
 - `timezone` - For RSS feed timestamps (format: "+/-HHMM")
 - `footer_text` - Footer content with **HTML link support**
+- `plausible_domain` - Optional Plausible Analytics domain (e.g., "yourdomain.com")
 
 #### Adding Links in Configuration
 

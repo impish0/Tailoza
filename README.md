@@ -156,7 +156,8 @@ Edit `config.json`:
   "theme": "dark",                        // "dark" or "light" theme
   "posts_per_page": 20,                   // Posts per page before pagination
   "timezone": "+0000",                    // Your timezone for RSS feeds (e.g., "-0500" for EST)
-  "post_url_prefix": "/posts"             // URL structure for posts (see below)
+  "post_url_prefix": "/posts",            // URL structure for posts (see below)
+  "plausible_domain": "yourdomain.com"     // Optional: Enable Plausible Analytics
 }
 ```
 
@@ -174,6 +175,7 @@ Edit `config.json`:
   - `"/posts"` (default) → `yourdomain.com/posts/my-post.html`
   - `"/blog"` → `yourdomain.com/blog/my-post.html`
   - `""` (empty) → `yourdomain.com/my-post.html`
+- **plausible_domain**: Your domain for Plausible Analytics (optional, leave empty to disable)
 
 **Migrating from another platform?** The `post_url_prefix` option helps preserve your SEO when moving from WordPress, Ghost, or other platforms.
 
@@ -241,6 +243,36 @@ Got a long post? Add `toc: true` to the frontmatter. It'll generate a nice float
 ### Search (It's Fast)
 
 Click the search link. Type something. It searches everything - titles, content, categories. Results show up instantly with your search terms highlighted. No backend needed, it's all client-side magic.
+
+### Analytics (If You Want Them)
+
+Want to see who's reading your stuff? Add this to your `config.json`:
+
+```json
+{
+  "plausible_domain": "yourdomain.com"
+}
+```
+
+That's it. Tailoza automatically adds the Plausible Analytics script to every page.
+
+**Why Plausible?**
+- Privacy-focused (no cookies, GDPR compliant)
+- Lightweight (< 1KB script)
+- Simple dashboard
+- No creepy tracking
+
+**How to set it up:**
+
+1. Sign up at [plausible.io](https://plausible.io)
+2. Add your domain to your Plausible account
+3. Add `"plausible_domain": "yourdomain.com"` to config.json
+4. Build your site: `python3 build.py`
+5. Deploy
+
+Done. You'll start seeing stats in your Plausible dashboard.
+
+**Don't want analytics?** Just leave out the `plausible_domain` field. Zero tracking scripts get added.
 
 ## The Philosophy (Why I Built This)
 
