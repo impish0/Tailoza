@@ -148,17 +148,18 @@ Edit `config.json`:
 
 ```json
 {
-  "site_title": "Your Blog Name",         // Your blog's name (appears in header)
-  "site_url": "https://yourdomain.com",   // Full URL without trailing slash
-  "site_description": "What you're about", // SEO description for your site
-  "author": "You",                        // Default author (can override per post)
-  "footer_text": "© 2024 Your Name",     // Footer text (can include HTML/emoji)
-  "theme": "dark",                        // "dark" or "light" theme
-  "posts_per_page": 20,                   // Posts per page before pagination
-  "timezone": "+0000",                    // Your timezone for RSS feeds (e.g., "-0500" for EST)
-  "post_url_prefix": "/posts",            // URL structure for posts (see below)
-  "plausible_domain": "yourdomain.com",    // Optional: Enable Plausible Analytics
-  "plausible_options": ["hash"]           // Optional: Advanced Plausible tracking
+  "site_title": "Your Blog Name",          // Your blog's name (appears in header)
+  "site_url": "https://yourdomain.com",    // Full URL without trailing slash
+  "site_description": "What you're about",  // SEO description for your site
+  "author": "You",                         // Default author (can override per post)
+  "footer_text": "© 2024 Your Name",      // Footer text (can include HTML/emoji)
+  "theme": "dark",                         // "dark" or "light" theme
+  "posts_per_page": 20,                    // Posts per page before pagination
+  "timezone": "+0000",                     // Your timezone for RSS feeds (e.g., "-0500" for EST)
+  "post_url_prefix": "/posts",             // URL structure for posts (see below)
+  "plausible_domain": "yourdomain.com",     // Optional: Enable Plausible Analytics
+  "plausible_options": ["hash"],            // Optional: Advanced Plausible tracking
+  "rss_full_content": true                  // RSS: full article in readers (true) or summary (false)
 }
 ```
 
@@ -166,18 +167,23 @@ Edit `config.json`:
 
 - **site_title**: Shows in the browser tab and site header
 - **site_url**: Used for generating absolute URLs (RSS, sitemap, social cards)
+  - Must start with `http://` or `https://`. Trailing slash is removed automatically.
 - **site_description**: Used in meta tags and RSS feed
 - **author**: Default author for posts (override with `author:` in post frontmatter)
 - **footer_text**: Appears at the bottom of every page (HTML allowed)
 - **theme**: Choose "dark" or "light" mode
 - **posts_per_page**: How many posts before pagination kicks in
 - **timezone**: Used for RSS pubDate (format: +/-HHMM, e.g., "+0530" for IST)
+  - Examples: `-0800` Pacific (PST), `-0500` Eastern (EST), `+0000` UTC, `+0100` CET, `+0530` IST, `+0900` JST
+  - Heads up: This is a fixed offset. It does not auto-switch for daylight savings.
 - **post_url_prefix**: Customize your URL structure:
   - `"/posts"` (default) → `yourdomain.com/posts/my-post.html`
   - `"/blog"` → `yourdomain.com/blog/my-post.html`
   - `""` (empty) → `yourdomain.com/my-post.html`
 - **plausible_domain**: Your domain for Plausible Analytics (optional, leave empty to disable)
 - **plausible_options**: Advanced Plausible tracking options (optional array)
+  - Supported: `hash`, `outbound-links`, `file-downloads`, `404`, `custom-events`, `local`, `manual`, `compat`
+- **rss_full_content**: When `true` (default), your RSS feed includes the full article content. When `false`, the feed shows a short description with title, author and link.
 
 **Migrating from another platform?** The `post_url_prefix` option helps preserve your SEO when moving from WordPress, Ghost, or other platforms.
 
@@ -267,12 +273,15 @@ That's it. Tailoza automatically adds the Plausible Analytics script to every pa
 }
 ```
 
-**Available options:**
+**Available options:** (see the official guide: [Plausible Script Extensions](https://plausible.io/docs/script-extensions))
 - `hash` - Track heading/anchor clicks (perfect for TOC links)
 - `outbound-links` - Track external link clicks  
 - `file-downloads` - Track PDF/file downloads
 - `404` - Track 404 error pages
 - `custom-events` - Enable custom event tracking
+ - `local` - Load a local/proxied script variant to reduce ad-blocking
+ - `manual` - Disable automatic pageview tracking (you call events manually)
+ - `compat` - Compatibility script for older browsers/ad blockers
 
 **Why Plausible?**
 - Privacy-focused (no cookies, GDPR compliant)
@@ -291,6 +300,27 @@ That's it. Tailoza automatically adds the Plausible Analytics script to every pa
 Done. You'll start seeing stats in your Plausible dashboard.
 
 **Don't want analytics?** Just leave out the `plausible_domain` field. Zero tracking scripts get added.
+
+If you want to customize the script or add auto-tracking enhancements, read the [Plausible Script Extensions](https://plausible.io/docs/script-extensions) guide. For getting started end-to-end, see the [Plausible setup docs](https://plausible.io/docs/).
+
+### RSS (Full posts vs summaries)
+
+Your readers using feed apps should get the good stuff.
+
+- **Default behavior**: Tailoza ships RSS with full content enabled. Feed readers will show your entire post right in the app.
+- **Config switch**: Set `"rss_full_content": false` if you prefer summary-only feeds (title, description, author, link).
+- **How many posts**: The feed includes your latest 10 posts.
+- **URLs**: Generated using `site_url` and `post_url_prefix` so links are always absolute.
+- **Content tag**: Full posts are placed in `content:encoded` per spec.
+
+Example snippet:
+
+```json
+{
+  "rss_full_content": true,
+  "timezone": "+0000"
+}
+```
 
 ## The Philosophy (Why I Built This)
 
